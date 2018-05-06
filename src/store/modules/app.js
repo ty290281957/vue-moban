@@ -1,8 +1,10 @@
 const app = {
   state: {
     sidebar: {
-      opened: !+sessionStorage.getItem('sidebarStatus')
-    }
+      opened: !+sessionStorage.getItem('sidebarStatus'),
+      withoutAnimation: false
+    },
+    device: 'desktop'
   },
   mutations: {
     TOGGLE_SIDEBAR: state => {
@@ -12,11 +14,26 @@ const app = {
         sessionStorage.setItem('sidebarStatus', 0)
       }
       state.sidebar.opened = !state.sidebar.opened
+      state.sidebar.withoutAnimation = false
+    },
+    CLOSE_SIDEBAR: (state, withoutAnimation) => {
+      sessionStorage.setItem('sidebarStatus', 1)
+      state.sidebar.opened = false
+      state.sidebar.withoutAnimation = withoutAnimation
+    },
+    TOGGLE_DEVICE: (state, device) => {
+      state.device = device
     }
   },
   actions: {
     toggleSideBar ({ commit }) {
       commit('TOGGLE_SIDEBAR')
+    },
+    closeSideBar ({ commit }, { withoutAnimation }) {
+      commit('CLOSE_SIDEBAR', withoutAnimation)
+    },
+    toggleDevice ({ commit }, device) {
+      commit('TOGGLE_DEVICE', device)
     }
   }
 }

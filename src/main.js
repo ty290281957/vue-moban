@@ -5,6 +5,7 @@ import App from './App'
 import router from './router'
 import store from './store'
 import { getToken } from '@/utils/auth' // getToken from sessionStorage
+import 'normalize.css/normalize.css'// A modern alternative to CSS resets
 // 加载进度条
 import NProgress from 'nprogress' // progress bar
 import 'nprogress/nprogress.css'// progress bar style
@@ -35,7 +36,7 @@ router.beforeEach((to, from, next) => {
   if (getToken()) { // determine if there has token
     /* has token */
     if (to.path === '/login') {
-      next({ path: '/' })
+      next({ path: '' })
       NProgress.done() // if current page is dashboard will not trigger	afterEach hook, so manually handle it
     } else {
       console.log(store.getters)
@@ -56,7 +57,7 @@ router.beforeEach((to, from, next) => {
         if (hasPermission(store.getters.roles, to.meta.roles)) {
           next()//
         } else {
-          next({ path: '/', replace: true })
+          next({ path: '', replace: true })
           // next({ path: '/401', replace: true, query: { noGoBack: true }})
         }
         // 可删 ↑

@@ -24,14 +24,14 @@ Vue.use(Router)
 export const constantRouterMap = [
   { path: '/login', component: _import('login/index'), hidden: true },
   {
-    path: '/',
+    path: '',
     component: Layout,
-    redirect: 'index',
+    redirect: '/index',
     children: [{
       path: 'index',
       component: _import('index/index'),
       name: 'index',
-      meta: { title: '首页', icon: 'shouye', noCache: true }
+      meta: { title: '首页', icon: 'warning', noCache: true }
     }]
   }
 ]
@@ -55,7 +55,7 @@ export const asyncRouterMap = [
       name: 'test1',
       meta: {
         title: 'test1',
-        icon: 'shebei',
+        icon: 'warning',
         roles: ['test1-1'] // or you can only set roles in sub nav
       }
     }]
@@ -70,7 +70,7 @@ export const asyncRouterMap = [
       name: 'test2',
       meta: {
         title: 'test2',
-        icon: 'yonghu',
+        icon: 'warning',
         roles: ['test2-1'] // or you can only set roles in sub nav
       }
     }]

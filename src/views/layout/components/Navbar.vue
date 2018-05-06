@@ -1,6 +1,7 @@
 <template>
   <el-menu class="navbar" mode="horizontal">
     <hamburger class="hamburger-container" :toggleClick="toggleSideBar" :isActive="sidebar.opened"></hamburger>
+    <breadcrumb class="breadcrumb-container"></breadcrumb>
     <div class="right-menu">
       <screenfull class="screenfull right-menu-item"></screenfull>
       <el-dropdown class="avatar-container right-menu-item" trigger="click">
@@ -20,7 +21,7 @@
 
 <script>
 import { mapGetters } from 'vuex'
-// import Breadcrumb from '@/components/Breadcrumb'
+import Breadcrumb from '@/components/Breadcrumb'
 import Hamburger from '@/components/Hamburger'
 // import ErrorLog from '@/components/ErrorLog'
 import Screenfull from '@/components/Screenfull'
@@ -30,11 +31,11 @@ import Screenfull from '@/components/Screenfull'
 export default {
   components: {
     Hamburger,
-    Screenfull
+    Screenfull,
+    Breadcrumb
     // LangSelect,
     // ThemePicker,
     // ErrorLog,
-    //  Breadcrumb
   },
   computed: {
     ...mapGetters([
