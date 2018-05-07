@@ -9,7 +9,7 @@ const user = {
     // name: '',
     // avatar: '',
     // introduction: '',
-    roles: [],
+    purview: [],
     // setting: {
     //   articlePlatform: []
     // },
@@ -35,8 +35,8 @@ const user = {
     // SET_AVATAR: (state, avatar) => {
     //   state.avatar = avatar
     // },
-    SET_ROLES: (state, roles) => {
-      state.roles = roles
+    SET_PURVIEW: (state, purview) => {
+      state.purview = purview
     },
     SET_TOKEN: (state, token) => {
       state.token = token
@@ -51,7 +51,7 @@ const user = {
         loginByUsername(username, userInfo.password).then(response => {
           const data = response.data.data
           commit('SET_TOKEN', data.token)
-          // commit('SET_ROLES', data.roles)
+          // commit('SET_PURVIEW', data.roles)
           setToken(data.token)
           resolve()
         }).catch(error => {
@@ -64,8 +64,9 @@ const user = {
     GetUserInfo ({ commit, state }) {
       return new Promise((resolve, reject) => {
         getUserInfoByToken(state.token).then(response => {
+          console.log(response)
           const data = response.data
-          commit('SET_ROLES', data.data.roles)
+          commit('SET_PURVIEW', data.data.purview)
           resolve(data)
         }).catch(error => {
           reject(error)

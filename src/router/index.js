@@ -56,22 +56,32 @@ export const asyncRouterMap = [
       meta: {
         title: 'test1',
         icon: 'warning',
-        roles: ['test1-1'] // or you can only set roles in sub nav
+        roles: ['test1'] // or you can only set roles in sub nav
       }
     }]
   }, {
+    name: 'test2',
     path: '/test2',
     component: Layout,
     redirect: '/test2/index',
-    meta: { roles: ['test2'] }, // you can set roles in root nav
+    meta: { roles: ['test2'], icon: 'warning', title: 'test2' }, // you can set roles in root nav
     children: [{
       path: 'index',
       component: _import('test2/index'),
-      name: 'test2',
+      name: 'test2-1',
       meta: {
-        title: 'test2',
+        title: 'test2-1',
         icon: 'warning',
         roles: ['test2-1'] // or you can only set roles in sub nav
+      }
+    }, {
+      path: 'index2',
+      component: _import('test3/index'),
+      name: 'test2-2',
+      meta: {
+        title: 'test2-2',
+        icon: 'warning',
+        roles: ['test2-2'] // or you can only set roles in sub nav
       }
     }]
   }, {

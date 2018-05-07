@@ -2,7 +2,7 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import app from './modules/app'
 // import errorLog from './modules/errorLog'
-// import tagsView from './modules/tagsView'
+import tagsView from './modules/tagsView'
 import permission from './modules/permisson'
 import user from './modules/user'
 import getters from './getters'
@@ -13,9 +13,9 @@ const store = new Vuex.Store({
   modules: {
     permission,
     user,
-    app
+    app,
+    tagsView
     // errorLog,
-    // tagsView
   },
   getters
 })

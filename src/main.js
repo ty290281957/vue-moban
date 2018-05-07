@@ -6,6 +6,8 @@ import router from './router'
 import store from './store'
 import { getToken } from '@/utils/auth' // getToken from sessionStorage
 import 'normalize.css/normalize.css'// A modern alternative to CSS resets
+import './mock' // simulation data
+
 // 加载进度条
 import NProgress from 'nprogress' // progress bar
 import 'nprogress/nprogress.css'// progress bar style
@@ -23,10 +25,10 @@ Vue.component('svg-icon', SvgIcon)
 
 // 路由守卫
 // permissiom judge function
-function hasPermission (roles, permissionRoles) {
-  if (roles.indexOf('admin') >= 0) return true // admin permission passed directly
+function hasPermission (purview, permissionRoles) {
+  // if (purview.indexOf('admin') >= 0) return true // admin permission passed directly
   if (!permissionRoles) return true
-  return roles.some(role => permissionRoles.indexOf(role) >= 0)
+  return purview.some(purview => permissionRoles.indexOf(purview.purviewLabel) >= 0)
 }
 
 const whiteList = ['/login']// no redirect whitelist
@@ -40,12 +42,12 @@ router.beforeEach((to, from, next) => {
       NProgress.done() // if current page is dashboard will not trigger	afterEach hook, so manually handle it
     } else {
       console.log(store.getters)
-      if (store.getters.roles.length === 0) { // 判断当前用户是否已拉取完user_info信息
+      if (store.getters.purview.length === 0) { // 判断当前用户是否已拉取完user_info信息
         store.dispatch('GetUserInfo').then(res => { // 拉取user_info
           console.log(res)
-          const roles = res.data.roles // note: roles must be a array! such as: ['editor','develop']
-          console.log({ roles })
-          store.dispatch('GenerateRoutes', { roles }).then(() => { // 根据roles权限生成可访问的路由表
+          const purview = res.data.purview // note: roles must be a array! such as: ['editor','develop']
+          console.log({ purview })
+          store.dispatch('GenerateRoutes', { purview }).then(() => { // 根据roles权限生成可访问的路由表
             router.addRoutes(store.getters.addRouters) // 动态添加可访问路由表
             next({ ...to, replace: true }) // hack方法 确保addRoutes已完成 ,set the replace: true so the navigation will not leave a history record
           })
@@ -54,7 +56,7 @@ router.beforeEach((to, from, next) => {
         })
       } else {
         // 没有动态改变权限的需求可直接next() 删除下方权限判断 ↓
-        if (hasPermission(store.getters.roles, to.meta.roles)) {
+        if (hasPermission(store.getters.purview, to.meta.roles)) {
           next()//
         } else {
           next({ path: '', replace: true })
